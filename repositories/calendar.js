@@ -1,6 +1,13 @@
 const axios = require("../plugins/axios")
 
 const transformResultObject = (obj) => {
+    const extractDescription = (array) => {
+        if (array == null || array == undefined || array.length < 1) {
+            return null
+        }
+        return array[0].Description
+    }
+
     const transformCoaches = (listObj) => {
         if (listObj == null || listObj == undefined) {
             return undefined
@@ -9,8 +16,8 @@ const transformResultObject = (obj) => {
             IdCoach: e.IdCoach,
             IdCountry: e.IdCountry,
             PictureUrl: e.PictureUrl,
-            Name: e.Name[0].Description,
-            Alias: e.Alias[0].Description,
+            Name: extractDescription(e.Name),
+            Alias: extractDescription(e.Alias),
             Role: e.Role,
             SpecialStatus: e.SpecialStatus,
         }))
@@ -27,8 +34,8 @@ const transformResultObject = (obj) => {
             Status: e.Status,
             SpecialStatus: e.SpecialStatus,
             Captain: e.Captain,
-            PlayerName: e.PlayerName[0].Description,
-            ShortName: e.ShortName[0].Description,
+            PlayerName: extractDescription(e.PlayerName),
+            ShortName: extractDescription(e.ShortName),
             Position: e.Position,
             PlayerPicture: e.PlayerPicture.PictureUrl,
             FieldStatus: e.FieldStatus,
@@ -48,8 +55,8 @@ const transformResultObject = (obj) => {
             SubstitutePosition: e.SubstitutePosition,
             IdPlayerOff: e.IdPlayerOff,
             IdPlayerOn: e.IdPlayerOn,
-            PlayerOffName: e.PlayerOffName[0].Description,
-            PlayerOnName: e.PlayerOnName[0].Description,
+            PlayerOffName: extractDescription(e.PlayerOffName),
+            PlayerOnName: extractDescription(e.PlayerOnName),
             Minute: e.Minute,
             IdTeam: e.IdTeam,
         }))
@@ -61,7 +68,7 @@ const transformResultObject = (obj) => {
         }
         return {
             IdTeam: obj.IdTeam,
-            TeamName: obj.TeamName[0].Description,
+            TeamName: extractDescription(obj.TeamName),
             TeamAbbreviation: obj.Abbreviation,
             TeamPictureUrl: obj.PictureUrl.replace("{format}", "sq").replace("{size}", "4"),
             Tactics: obj.Tactics,
@@ -79,10 +86,10 @@ const transformResultObject = (obj) => {
         IdSeason: obj.IdSeason,
         IdStage: obj.IdStage,
         IdGroup: obj.IdGroup,
-        CompetitionName: obj.CompetitionName[0].Description,
-        SeasonName: obj.SeasonName[0].Description,
-        StageName: obj.StageName[0].Description,
-        GroupName: obj.GroupName[0].Description,
+        CompetitionName: extractDescription(obj.CompetitionName),
+        SeasonName: extractDescription(obj.SeasonName),
+        StageName: extractDescription(obj.StageName),
+        GroupName: extractDescription(obj.GroupName),
         HomeTeam: transformTeamObject(obj.Home != null ? obj.Home : obj.HomeTeam),
         AwayTeam: transformTeamObject(obj.Away != null ? obj.Away : obj.AwayTeam),
         Match: {
@@ -109,7 +116,7 @@ const transformResultObject = (obj) => {
         },
         Stadium: {
             IdStadium: obj.Stadium.IdStadium,
-            Name: obj.Stadium.Name[0].Description,
+            Name: extractDescription(obj.Stadium.Name),
         },
     }
 }
