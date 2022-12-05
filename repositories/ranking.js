@@ -52,13 +52,15 @@ const getRankin = async (language, IdCompetition, IdSeason, IdStage) => {
                 groupRanks[index] = newRank
             }
         })
+
+        // Sort by proup name
         groupRanks.sort((a, b) => {
             if (a.GroupName < b.GroupName) return -1;
             if (a.GroupName > b.GroupName) return 1;
             return 0;
         })
 
-        // Fitter created data
+        // Transform created data
         groupRanks.forEach(item => {
             item.GroupRanks.forEach(gr => {
                 gr.Group = gr.Group[0].Description
